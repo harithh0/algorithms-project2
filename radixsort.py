@@ -34,5 +34,5 @@ def radix_sort(arr):
         counting_sort(arr, exp)
         exp *= 10  # Move to the next place value
 
-sorted_arr= radix_sort(arr)
-print("Sorted array:", sorted_arr)
+    sorted_arr= radix_sort(arr)
+    print("Sorted array:", sorted_arr)
