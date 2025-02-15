@@ -1,3 +1,6 @@
+import random
+
+
 def quicksort(arr: list[int]):
     if (len(arr) < 2):
         return arr
@@ -5,8 +8,9 @@ def quicksort(arr: list[int]):
         less_than: list[int] = []
         greater_than: list[int] = []
         same_value: list[int] = []
-        pivot: int = arr[0]
-        for i in arr[1:]:
+        # pivot: int = arr[0] -- bad - causes imbalance
+        pivot: int = arr[random.randint(0, len(arr) - 1)]
+        for i in arr:
             if i < pivot:
                 less_than.append(i)
             elif i > pivot:
@@ -14,5 +18,4 @@ def quicksort(arr: list[int]):
             else:
                 same_value.append(i)
 
-        return quicksort(less_than) + same_value + [pivot
-                                                    ] + quicksort(greater_than)
+        return quicksort(less_than) + same_value + quicksort(greater_than)
