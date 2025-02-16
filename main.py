@@ -99,7 +99,7 @@ def test_algorithms():
         "bubble": bubble_sort,
         "quicksort": quicksort,
         "merge_sort": merge_sort,
-        # "radixsort": radix_sort
+        "radixsort": radix_sort
 
     }
     measure_worst(**functions_dict)
@@ -167,7 +167,7 @@ def main():
     {"name" : "Bubble Sort", "function": bubble_sort},
     {"name" : "Merge Sort", "function": merge_sort},
     {"name" : "Quick Sort", "function": quicksort},
-    {"name" : "Bubble Sort", "function": bubble_sort}, 
+    {"name" : "Radix Sort", "function": radix_sort}, 
 ] 
     # i/o
     finished = False
@@ -179,7 +179,7 @@ def main():
     1. Bubble Sort
     2. Merge Sort
     3. Quick Sort
-    4. Heap Sort (replacing this line with the algorithm you choose)
+    4. Radix Sort
     5. Exit""")
         
         userchoice = int(input("Select a sorting algorithm (1-5): "))
@@ -193,12 +193,12 @@ def main():
             selection(algorithms[2])
             pass
         elif (userchoice == 4):
-            pass
+            selection(algorithms[3])
         elif (userchoice == 5):
             finished = True
             print("bye!")
 
 
 if __name__ == "__main__":
-    # main() # for user i/o
-    test_algorithms() # for time analysis testing
+    main() # for user i/o
+    # test_algorithms() # for time analysis testing
