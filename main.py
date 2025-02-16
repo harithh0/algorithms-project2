@@ -92,19 +92,113 @@ def measure_best(**functions):
 
 
 
-def main():
+def test_algorithms():
+    # for testing only
     # add algorithms here
     functions_dict = {
         "bubble": bubble_sort,
         "quicksort": quicksort,
         "merge_sort": merge_sort,
-    # "radixsort": radix_sort
+        # "radixsort": radix_sort
 
     }
     measure_worst(**functions_dict)
     measure_average(**functions_dict)
     measure_best(**functions_dict)
 
+def test_algorithm(func , complexity: str, chosen_data: list[dict]):
+    # for user i/o
+    print(f"In {complexity} case,")
+    for case in chosen_data:
+        start = time.perf_counter()
+        func(case.get("data"))
+        stop = time.perf_counter()
+        elapsed_seconds = (stop - start)
+        print(f"N={case.get("name")} took {elapsed_seconds} seconds\n")
+
+    while True:
+        users_other_n_chose = str(input("Do you want to input another N (Y/N)? "))
+        if (users_other_n_chose.lower() == "y"):
+            n_amount = int(input("What is the N? "))
+            if (complexity == "best"):
+                list_of_n_amount = list(range(0, n_amount)) 
+            elif (complexity == "average"):
+                half = n_amount // 2
+                first_half = list(range(0, half))
+                second_half = list(range((half * 2) - 1, half - 1, -1))
+                list_of_n_amount = first_half + second_half
+            elif (complexity == "worst"):
+                list_of_n_amount = list(range(n_amount, 0, -1))
+            else:
+                exit()
+            start = time.perf_counter()
+            func(list_of_n_amount)
+            stop = time.perf_counter()
+            elapsed_seconds = (stop - start)
+            print(f"N={n_amount} took {elapsed_seconds} seconds\n")
+        else:
+            break
+
+
+
+def selection(algorithm):
+    algorithm_name = algorithm.get("name")
+    algorithm_function = algorithm.get("function")
+    print(f"""
+    Case scenarios for {algorithm_name}
+    ---------------
+    1. best case
+    2. average case
+    3. worst case
+    4. exit {algorithm_name} test""")
+
+    userchoice = int(input("Select the case (1-4): ")) 
+    if (userchoice == 1):
+        test_algorithm(algorithm_function, "best", best_cases)
+    elif (userchoice == 2):
+        test_algorithm(algorithm_function, "average", avg_cases)
+    elif (userchoice == 3):
+        test_algorithm(algorithm_function, "worst", worst_cases)
+    elif (userchoice == 4):
+        return
+
+def main():
+    algorithms = [
+    {"name" : "Bubble Sort", "function": bubble_sort},
+    {"name" : "Merge Sort", "function": merge_sort},
+    {"name" : "Quick Sort", "function": quicksort},
+    {"name" : "Bubble Sort", "function": bubble_sort}, 
+] 
+    # i/o
+    finished = False
+    while finished != True:
+        print("Welcome to the test suite of selected sorting algorithms!")
+        print("""
+    Select the sorting algorithm you want to test.
+    -------------------------
+    1. Bubble Sort
+    2. Merge Sort
+    3. Quick Sort
+    4. Heap Sort (replacing this line with the algorithm you choose)
+    5. Exit""")
+        
+        userchoice = int(input("Select a sorting algorithm (1-5): "))
+
+        if (userchoice == 1):
+            selection(algorithms[0]) 
+        elif (userchoice == 2):
+            selection(algorithms[1])
+            pass
+        elif (userchoice == 3):
+            selection(algorithms[2])
+            pass
+        elif (userchoice == 4):
+            pass
+        elif (userchoice == 5):
+            finished = True
+            print("bye!")
+
 
 if __name__ == "__main__":
-    main()
+    main() # for user i/o
+    # test_algorithms() # for time analysis testing
