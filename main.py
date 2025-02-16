@@ -114,7 +114,7 @@ def test_algorithm(func , complexity: str, chosen_data: list[dict]):
         func(case.get("data"))
         stop = time.perf_counter()
         elapsed_seconds = (stop - start)
-        print(f"N={case.get("name")} took {elapsed_seconds} seconds\n")
+        print(f"N={case.get("name")} took {elapsed_seconds:.6f} seconds\n")
 
     while True:
         users_other_n_chose = str(input("Do you want to input another N (Y/N)? "))
@@ -135,7 +135,7 @@ def test_algorithm(func , complexity: str, chosen_data: list[dict]):
             func(list_of_n_amount)
             stop = time.perf_counter()
             elapsed_seconds = (stop - start)
-            print(f"N={n_amount} took {elapsed_seconds} seconds\n")
+            print(f"N={n_amount} took {elapsed_seconds:.6f} seconds\n")
         else:
             break
 
@@ -200,5 +200,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main() # for user i/o
-    # test_algorithms() # for time analysis testing
+    # main() # for user i/o
+    test_algorithms() # for time analysis testing
