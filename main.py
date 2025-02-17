@@ -109,7 +109,7 @@ def measure_best(**functions):
             print(f"took {elapsed_seconds} seconds\n")
 
 
-def test_algorithms():
+def test_all_algorithms():
     # for testing only
     # add algorithms here
     functions_dict = {
@@ -231,4 +231,4 @@ def main():
 
 if __name__ == "__main__":
     main()  # for user i/o
-    # test_algorithms() # for time analysis testing
+    # test_all_algorithms() # for time analysis testing
