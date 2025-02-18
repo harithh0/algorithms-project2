@@ -1,19 +1,16 @@
+import copy
 import time
+
+import pandas as pd
 
 from bubblesort import bubble_sort
 from mergesort import merge_sort
 from quick_sort import quicksort
 from radixsort import radix_sort
 from test_data import *
-import pandas as pd
 
 # Initialize a dictionary to store time data
-time_data = {
-    "Algorithm": [],
-    "Size": [],
-    "Case": [],
-    "Time (seconds)": []
-}
+time_data = {"Algorithm": [], "Size": [], "Case": [], "Time (seconds)": []}
 CLOSE = "\033[0m"
 RED = "\033[31m"
 GREEN = "\033[32m"
@@ -88,6 +85,7 @@ def measure_worst(**functions):
             time_data["Case"].append("Worst")
             time_data["Time (seconds)"].append(elapsed_seconds)
 
+
 def measure_average(**functions):
     print(f"{BLUE}Testing Average Time Θ{CLOSE}")
     for case in avg_cases:
@@ -107,6 +105,7 @@ def measure_average(**functions):
             time_data["Case"].append("Average")
             time_data["Time (seconds)"].append(elapsed_seconds)
 
+
 def measure_best(**functions):
     print(f"{BLUE}Testing Best Time Ω{CLOSE}")
     for case in best_cases:
@@ -125,6 +124,7 @@ def measure_best(**functions):
             time_data["Size"].append(case.get("name"))
             time_data["Case"].append("Best")
             time_data["Time (seconds)"].append(elapsed_seconds)
+
 
 # save data as csv
 def save_to_csv():
@@ -160,8 +160,9 @@ def test_algorithm(func, complexity: str, chosen_data: list[dict]):
     # for user i/o
     print(f"In {complexity} case,")
     for case in chosen_data:
+        temp_data = copy.deepcopy(case.get("data"))
         start = time.perf_counter()
-        func(case.get("data"))
+        func(temp_data)
         stop = time.perf_counter()
         elapsed_seconds = stop - start
         print(f"N={case.get('name')} took {elapsed_seconds:.6f} seconds\n")
