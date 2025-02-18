@@ -264,5 +264,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()  # for user i/o
+    main()  # for user I/O
     # test_all_algorithms() # for time analysis testing
