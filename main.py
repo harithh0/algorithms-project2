@@ -160,6 +160,7 @@ def test_algorithm(func, complexity: str, chosen_data: list[dict]):
     # for user i/o
     print(f"In {complexity} case,")
     for case in chosen_data:
+        # creates a copy of the list inside the dict (since lists/dicts are mutable and if you don't have this it will modify the orignal list)
         temp_data = copy.deepcopy(case.get("data"))
         start = time.perf_counter()
         func(temp_data)
