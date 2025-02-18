@@ -12,6 +12,7 @@ from test_data import *
 # Initialize a dictionary to store time data
 time_data = {"Algorithm": [], "Size": [], "Case": [], "Time (seconds)": []}
 CLOSE = "\033[0m"
+
 RED = "\033[31m"
 GREEN = "\033[32m"
 BLUE = "\033[34m"
