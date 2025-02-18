@@ -5,7 +5,15 @@ from mergesort import merge_sort
 from quick_sort import quicksort
 from radixsort import radix_sort
 from test_data import *
+import pandas as pd
 
+# Initialize a dictionary to store time data
+time_data = {
+    "Algorithm": [],
+    "Size": [],
+    "Case": [],
+    "Time (seconds)": []
+}
 CLOSE = "\033[0m"
 RED = "\033[31m"
 GREEN = "\033[32m"
@@ -60,9 +68,9 @@ worst_cases = [
 ]
 
 
+# Modify the measure functions to collect data
 def measure_worst(**functions):
     print(f"{BLUE}Testing Worst Time O{CLOSE}")
-
     for case in worst_cases:
         for function_name, function in functions.items():
             print(
@@ -71,11 +79,14 @@ def measure_worst(**functions):
             start = time.perf_counter()
             function(case.get("data"))
             stop = time.perf_counter()
-            elapsed_micro = (stop - start) * 1_000_000
             elapsed_seconds = stop - start
-            print(f"took {elapsed_micro} microseconds")
             print(f"took {elapsed_seconds} seconds\n")
 
+            # Collect data
+            time_data["Algorithm"].append(function_name)
+            time_data["Size"].append(case.get("name"))
+            time_data["Case"].append("Worst")
+            time_data["Time (seconds)"].append(elapsed_seconds)
 
 def measure_average(**functions):
     print(f"{BLUE}Testing Average Time Θ{CLOSE}")
@@ -87,11 +98,14 @@ def measure_average(**functions):
             start = time.perf_counter()
             function(case.get("data"))
             stop = time.perf_counter()
-            elapsed_micro = (stop - start) * 1_000_000
             elapsed_seconds = stop - start
-            print(f"took {elapsed_micro} microseconds")
             print(f"took {elapsed_seconds} seconds\n")
 
+            # Collect data
+            time_data["Algorithm"].append(function_name)
+            time_data["Size"].append(case.get("name"))
+            time_data["Case"].append("Average")
+            time_data["Time (seconds)"].append(elapsed_seconds)
 
 def measure_best(**functions):
     print(f"{BLUE}Testing Best Time Ω{CLOSE}")
@@ -103,10 +117,26 @@ def measure_best(**functions):
             start = time.perf_counter()
             function(case.get("data"))
             stop = time.perf_counter()
-            elapsed_micro = (stop - start) * 1_000_000
             elapsed_seconds = stop - start
-            print(f"took {elapsed_micro} microseconds")
             print(f"took {elapsed_seconds} seconds\n")
+
+            # Collect data
+            time_data["Algorithm"].append(function_name)
+            time_data["Size"].append(case.get("name"))
+            time_data["Case"].append("Best")
+            time_data["Time (seconds)"].append(elapsed_seconds)
+
+# save data as csv
+def save_to_csv():
+    # Convert the time data dictionary to a DataFrame
+    df = pd.DataFrame(time_data)
+
+    # Define the custom path
+    file_path = r"C:\Users\sorting_algorithm_times.csv"
+
+    # Save the DataFrame as a CSV file
+    df.to_csv(file_path, index=False)
+    print(f"CSV file saved at: {file_path}")
 
 
 def test_all_algorithms():
@@ -121,6 +151,9 @@ def test_all_algorithms():
     measure_worst(**functions_dict)
     measure_average(**functions_dict)
     measure_best(**functions_dict)
+
+    # Save the time data to CSV
+    save_to_csv()
 
 
 def test_algorithm(func, complexity: str, chosen_data: list[dict]):
@@ -201,7 +234,7 @@ def main():
     ]
     # i/o
     finished = False
-    while finished != True:
+    while not finished:
         print("Welcome to the test suite of selected sorting algorithms!")
         print("""
     Select the sorting algorithm you want to test.
